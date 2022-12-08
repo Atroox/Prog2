@@ -1,0 +1,60 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class Mikrofon extends Szenzor implements IMikrofon{
+
+    private Hangformatum formatum;
+    private boolean aktiv;
+
+    public Mikrofon(Integer x, Integer y, Hangformatum hangformatum) throws IllegalPositionException {
+        super(new Pozicio(x, y));
+        this.formatum = hangformatum;
+
+    }
+
+    public void setAktiv(boolean aktiv) {
+        this.aktiv = aktiv;
+    }
+
+    @Override
+    public String felveteltKeszit() throws SzenzorInaktivException{
+        if (!aktiv) {
+            throw new SzenzorInaktivException("");
+        }
+        else {
+            LocalDateTime localTime = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd_hh:mm");
+            String felvetelNEv = "x"+ getPozicio().getX()+"/y"+getPozicio().getY()+"_("+localTime.format(format)+").MP3";
+            return felvetelNEv;
+        }
+    }
+
+    @Override
+    public Hangformatum getFormatum() {
+        return null;
+    }
+
+    @Override
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+    @Override
+    public void adatkuldes() {
+        System.out.println("Felvétel mentve: "+ felveteltKeszit());
+
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Mikrofon(this.getPozicio().getX(), this.getPozicio().getY(),this.getFormatum());
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Mikrofon: %s, Formatum: %s",
+                super.toString(), formatum);
+    }
+}
