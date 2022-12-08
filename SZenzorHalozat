@@ -13,7 +13,7 @@ public class SzenzorHalozat {
         List<Szenzor> visszateres = new ArrayList<>();
         for(Szenzor szenzor : szenzorok){
             if(szenzor.isAktiv()) {
-                visszateres.add(szenzor.clone());
+                visszateres.add((Szenzor) szenzor.clone());
             }
         }
         Collections.sort(visszateres);
