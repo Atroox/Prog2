@@ -9,7 +9,7 @@ public class SzenzorHalozat {
         szenzorok.add(szenzor);
     }
 
-    public List<Szenzor> aktivSzenzorok() throws CloneNotSupportedException {
+    public List<Szenzor> aktivSzenzorok(){
         List<Szenzor> visszateres = new ArrayList<>();
         for(Szenzor szenzor : szenzorok){
             if(szenzor.isAktiv()) {
