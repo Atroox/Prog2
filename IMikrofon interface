@@ -1,0 +1,6 @@
+public interface IMikrofon {
+
+    public String felveteltKeszit();
+
+    public Hangformatum getFormatum();
+}
