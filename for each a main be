@@ -1,0 +1,5 @@
+ SzenzorHalozat halozat = new SzenzorHalozat();
+        TelepitSzenzorHalozat("C:\\Temp\\szenzorok.csv", halozat);
+        for(Szenzor szenzor : halozat.aktivSzenzorok()) {
+            System.out.println(szenzor);
+        }
