@@ -21,7 +21,7 @@ public abstract class Szenzor implements Comparable<Szenzor> {
     public abstract void adatkuldes();
 
     @Override
-    protected abstract Object clone() throws CloneNotSupportedException;
+    public abstract Object clone();
 
     @Override
     public int compareTo(Szenzor o) {
