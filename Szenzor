@@ -1,0 +1,42 @@
+public abstract class Szenzor implements Comparable<Szenzor> {
+    private Pozicio pozicio;
+
+    public Pozicio getPozicio() {
+        return pozicio;
+    }
+
+    protected void setPozicio(Pozicio pozicio) {
+        this.pozicio = pozicio;
+    }
+
+    public Szenzor(Pozicio pozicio) throws IllegalPositionException {
+        if ((pozicio.getX() > 150 || pozicio.getX() < 0 || pozicio.getY() < 0 || pozicio.getY() > 300)) {
+            throw new IllegalPositionException("");
+        }
+        this.pozicio = pozicio;
+    }
+
+    public abstract boolean isAktiv();
+
+    public abstract void adatkuldes();
+
+    @Override
+    protected abstract Object clone() throws CloneNotSupportedException;
+
+    @Override
+    public int compareTo(Szenzor o) {
+        if (pozicio.getX() != o.pozicio.getX()) {
+            return Integer.compare(pozicio.getX(), o.pozicio.getX());
+        } else {
+            return Integer.compare(pozicio.getY(), o.pozicio.getY());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d; %d)",
+                isAktiv() ? "On" : "Off",
+                pozicio.getX(), pozicio.getY());
+    }
+}
+
