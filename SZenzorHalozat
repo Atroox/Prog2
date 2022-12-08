@@ -1,0 +1,22 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class SzenzorHalozat {
+    private List<Szenzor> szenzorok;
+
+    public void telepit(Szenzor szenzor) {
+        szenzorok.add(szenzor);
+    }
+
+    public List<Szenzor> aktivSzenzorok() throws CloneNotSupportedException {
+        List<Szenzor> visszateres = new ArrayList<>();
+        for(Szenzor szenzor : szenzorok){
+            if(szenzor.isAktiv()) {
+                visszateres.add(szenzor.clone());
+            }
+        }
+        Collections.sort(visszateres);
+        return visszateres;
+    }
+}
