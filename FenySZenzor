@@ -1,0 +1,76 @@
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+public class FenySzenzor extends Szenzor implements IFenySzenzor{
+
+    private LocalTime napKelte;
+    LocalTime napNyugta;
+
+    public FenySzenzor(Integer x, Integer y, LocalTime napkelte, LocalTime napnyugta) throws IllegalPositionException {
+        super(new Pozicio(x, y));
+    }
+
+    private void setNapNyugta(LocalTime napNyugta) {
+        this.napNyugta = napNyugta;
+    }
+
+    public LocalTime getNapNyugta() {
+        return napNyugta;
+    }
+
+    private void setNapKelte(LocalTime napKelte) {
+        this.napKelte = napKelte;
+    }
+
+    public LocalTime getNapKelte() {
+        return napKelte;
+    }
+
+    @Override
+    public int fenyIntenzitastMer() throws SzenzorInaktivException{
+        if(isAktiv()) {
+            throw new SzenzorInaktivException("");
+        } else {
+            int min = 0;
+            int max = 101;
+            return (int)Math.random()*(max-min)+min;
+        }
+    }
+
+    @Override
+    public void napHosszBeallit(LocalTime napkelte, LocalTime napnyugta) {
+        setNapKelte(napkelte);
+        setNapNyugta(napnyugta);
+
+    }
+
+    @Override
+    public boolean isAktiv() {
+        LocalTime now = LocalTime.now();
+        if(now.getHour() < napKelte.getHour() && now.getMinute() < napKelte.getMinute()|| now.getHour() > napNyugta.getHour() && now.getMinute() > napNyugta.getMinute()) {
+            return false;
+        }
+        else  {
+            return true;
+        }
+    }
+
+    @Override
+    public void adatkuldes() {
+        LocalTime localtime = LocalTime.now();
+        System.out.println("A fény intenzitása a(z) ("+getPozicio().getX()+";"+getPozicio().getY()+") pozíción"+localtime+" időpontban: "+fenyIntenzitastMer()+" százalék");
+
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new FenySzenzor(this.getPozicio().getX(), this.getPozicio().getY(),this.napKelte, this.napNyugta);
+    }
+
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("H:mm");
+        return String.format("Feny szenzor: %s, K:%s - Ny:%s",
+                super.toString(), napKelte.format(formatter), napNyugta.format(formatter));
+    }
+}
